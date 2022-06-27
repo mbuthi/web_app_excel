@@ -16,6 +16,9 @@ load_dotenv()
 app = Flask(__name__)
 Bootstrap(app)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+data_base = os.getenv("DATABASE_URL")
+if data_base and data_base.startswith("postgres://"):
+    data_base = data_base.replace("postgres://", "postgresql://")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # login
