@@ -1,0 +1,22 @@
+{% include "header.html" %}
+{% block content %}
+<div style="background:linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7) ),url({{url_for('static', filename='images/bg-index.jpg')}})" class="header">
+    <div class="main-div">
+        <h1>Data Entry</h1>
+            {% if not current_user.is_authenticated %}
+                <div class="first-anchor-">
+                    <a href="{{url_for('login')}}" class="btn btn-success btn-lg">Login</a>
+                </div>
+                <div class="second-anchor-">
+                    <a href="{{url_for('register')}}" class="btn btn-success btn-lg">register</a>
+                </div>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+                <div class="second-anchor-">
+                    <a href="{{url_for('posts')}}" class="btn btn-success btn-lg">post data</a>
+                </div>
+            {% endif %}
+    </div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

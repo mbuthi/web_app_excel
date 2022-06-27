@@ -1,0 +1,10 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "header.html" %}
+{% block content %}
+<h1>Login</h1>
+{% include "flashes.html" %}
+<div class="container-fluid custom-container">
+    {{wtf.quick_form(form, novalidate=True, button_map={"submit":"success"})}}
+</div>
+{% include "footer.html" %}
+{% endblock %}
