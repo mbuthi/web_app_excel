@@ -19,7 +19,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 data_base = os.getenv("DATABASE_URL")
 if data_base and data_base.startswith("postgres://"):
     data_base = data_base.replace("postgres://", "postgresql://")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
+app.config["SQLALCHEMY_DATABASE_URI"] = data_base
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # login
 login_manager = LoginManager()
