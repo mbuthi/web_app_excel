@@ -2,7 +2,7 @@
 {% block content %}
 <div style="background:linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7) ),url({{url_for('static', filename='images/bg-index.jpg')}})" class="header">
     <div class="main-div">
-        <h1>Data Entry</h1>
+        <h1>Camp {{year}}</h1>
             {% if not current_user.is_authenticated %}
                 <div class="first-anchor-">
                     <a href="{{url_for('login')}}" class="btn btn-success btn-lg">Login</a>

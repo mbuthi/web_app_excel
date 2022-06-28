@@ -11,6 +11,7 @@ from form import LoginForm, PostForm, RegisterForm, UrlForm
 from api import SheetyApi
 from dotenv import load_dotenv
 import os
+import datetime
 
 load_dotenv()
 app = Flask(__name__)
@@ -57,24 +58,25 @@ db.create_all()
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    year = datetime.datetime.now().year
+    return render_template("index.html", year=year)
 
 
 @app.route("/register", methods=["POST", "GET"])
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        user_exist = Users.query.filter_by(email=register_form.email.data).first()
+        user_exist = Users.query.filter_by(email=register_form.email.data.strip()).first()
         if user_exist:
             flash("Email entered already exists, login rather")
             return redirect(url_for("login"))
         else:
-            hashed_password = generate_password_hash(password=register_form.password.data, method="pbkdf2:sha256",
+            hashed_password = generate_password_hash(password=register_form.password.data.strip(), method="pbkdf2:sha256",
                                                      salt_length=16)
-            new_user = Users(email=register_form.email.data,
+            new_user = Users(email=register_form.email.data.strip(),
                              password=hashed_password,
-                             first_name=register_form.first_name.data,
-                             last_name=register_form.second_name.data)
+                             first_name=register_form.first_name.data.strip().lower().title(),
+                             last_name=register_form.second_name.data.strip().lower().title())
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
@@ -87,9 +89,9 @@ def login():
     login_form = LoginForm()
 
     if login_form.validate_on_submit():
-        user = Users.query.filter_by(email=login_form.email.data).first()
+        user = Users.query.filter_by(email=login_form.email.data.strip()).first()
         if user:
-            if check_password_hash(pwhash=user.password, password=login_form.password.data):
+            if check_password_hash(pwhash=user.password, password=login_form.password.data.strip()):
                 login_user(user)
             else:
                 flash("Incorrect password, try again")
@@ -134,7 +136,7 @@ def posts():
                                language=post_form.language.data,
                                size_file=post_form.size_of_file.data,
                                country=post_form.country.data,
-                               scribe=f"{user.first_name} {user.last_name}",
+                               scribe=f"{user.first_name.lower().title()} {user.last_name.lower().title()}",
                                size_tiff=post_form.size_tiff.data,
                                )
 
