@@ -48,7 +48,7 @@ class SheetyApi:
         }
         data_length__ = 0
         try:
-            data_length__ = requests.get(self.url, headers=auth_token).json()["pdfCamps"][-2]["cardNumber"]
+            data_length__ = requests.get(self.url, headers=auth_token).json()["pdfCamp"][-2]["cardNumber"]
 
         except IndexError:
             data_length__ = 0

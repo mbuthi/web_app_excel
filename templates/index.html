@@ -1,6 +1,6 @@
 {% include "header.html" %}
 {% block content %}
-<div style="background:linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7) ),url({{url_for('static', filename='images/bg-index.jpg')}})" class="header">
+<div style="background:linear-gradient(rgba(0, 0, 0, .1), rgba(0, 0, 0, .1) ),url({{url_for('static', filename='images/bg-index.jpg')}})" class="header">
     <div class="main-div">
         <h1>Camp {{year}}</h1>
             {% if not current_user.is_authenticated %}
